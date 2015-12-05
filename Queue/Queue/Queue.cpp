@@ -12,42 +12,48 @@ using namespace std;
 int main()
 {
 	int n;
-	double p;
-	double *q;
+	double p;  //вероятность поступления задачи
+	double *q;  
 	setlocale(LC_CTYPE, "Russian");
-	cout << "Введите число заданий:" << endl;
-	cin >> n;
-	TQueue <int> a(n);
-	q = new double[n];
-	for (int i = 0; i < n; i++)
-		q[i] = rand() % 100 / 100.0;
-	cout << "Введите вероятность (в процентах), что придёт новое задание:" << endl;
+	char c;
 	do
 	{
-		cin >> p;
-		if ((p < 0) || (p>100))
-			cout << "Некорректный ввод. Введите значение заново:" << endl;
-	} while ((p<0)||(p>100));
-	p /= 100.0;
-	cout << "Состояние очереди:" << endl;
-	int j = 0;
-	for (int i = 0; i < n; i++)
-	{
-		if (q[i] >= p)
-			continue;
-		int tmp = (rand() % 100) + 1;
-		a.Push(tmp);
-		j++;
-		cout << "Поступила в очередь: задача №" << i << " - " << tmp << " - вероятность "<< q[i] << endl;
-		while ((a.Front() < a.Back()) && (!a.IsEmpty()))
+		cout << "Введите число заданий:" << endl;
+		cin >> n;
+		TQueue <int> a(n);
+		q = new double[n];
+		for (int i = 0; i < n; i++)
+			q[i] = rand() % 100 / 100.0;
+		cout << "Введите вероятность (в процентах), что придёт новая задача:" << endl;
+		do
+		{
+			cin >> p;
+			if ((p < 0) || (p>100))
+				cout << "Некорректный ввод. Введите значение заново:" << endl;
+		} while ((p < 0) || (p>100));
+		p /= 100.0;
+		cout << "Состояние очереди:" << endl;
+		int j = 0;
+		for (int i = 0; i < n; i++)
+		{
+			if (q[i] >= p)
+				continue;
+			int tmp = (rand() % 100) + 1;  //идентификатор задачи
+			a.Push(tmp);
+			j++;
+			cout << "Поступила в очередь: задача №" << i << " - " << tmp << " - вероятность " << q[i] << endl;
+			while ((a.Front() < a.Back()) && (!a.IsEmpty()))  //если идентификатор первой задачи в очереди меньше последней, то задача считается выполненной
+				cout << "Выполнено: задача - " << a.Pop() << endl;
+			i++;
+		}
+		while (!a.IsEmpty())
 			cout << "Выполнено: задача - " << a.Pop() << endl;
-		i++;
-	}
-	while(!a.IsEmpty())
-		cout << "Выполнено: задача - " << a.Pop() << endl;
-	if (!j)
-		cout << "В очередь не поступило ни одной задачи" << endl;
-	else cout << "Всего выполнено " << j << " задач" << endl;
+		if (!j)
+			cout << "В очередь не поступило ни одной задачи" << endl;
+		else cout << "Всего выполнено " << j << " задач" << endl;
+		cout << "Введите '1', если хотите ещё раз ввести вероятность, или любой другой символ для завершения работы:" << endl;
+		cin >> c;
+	} while (c == '1');
     return 0;
 }
 

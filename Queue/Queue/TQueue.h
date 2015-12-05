@@ -8,7 +8,7 @@ private:
 	T *mas;
 
 public:
-	TQueue(int _maxsize = 10)
+	TQueue(int _maxsize = 10)  //конструктор
 	{
 		if (_maxsize <= 0)
 			throw _maxsize;
@@ -18,8 +18,10 @@ public:
 		end = -1;
 		len = 0;
 	}
+
 	virtual ~TQueue() { delete[] mas; }
-	TQueue(const TQueue& q)
+
+	TQueue(const TQueue& q)  //конструктор копирования
 	{
 		MaxSize = q.MaxSize;
 		begin = q.begin;
@@ -29,17 +31,17 @@ public:
 			mas[i] = q.mas[i];
 	}
 
-	bool IsEmpty()
+	bool IsEmpty()  //проверка на пустоту
 	{
 		return len == 0;
 	}
 
-	bool IsFull()
+	bool IsFull()  //проверка на заполненность
 	{
 		return len == MaxSize;
 	}
 
-	void Push(const T n)
+	void Push(const T n)  //запись элемента
 	{
 		if (len == MaxSize)
 			throw len;
@@ -50,7 +52,7 @@ public:
 		mas[end] = n;
 	}
 
-	T Pop()
+	T Pop()  //чтение с удалением
 	{
 		if (!len)
 			throw - 1;
@@ -62,14 +64,21 @@ public:
 		return tmp;
 	}
 
-	T Front()
+	T Front()  //чтение без удаления
 	{
 		return mas[begin];
 	}
 
-	T Back()
+	T Back()  //чтение последнего элемента в очереди без удаления
 	{
 		return mas[end];
+	}
+
+	void Clear()  //очистка очереди
+	{
+		begin = 0;
+		end = -1;
+		len = 0;
 	}
 };
 
