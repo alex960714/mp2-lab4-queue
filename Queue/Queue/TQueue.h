@@ -27,6 +27,7 @@ public:
 		begin = q.begin;
 		end = q.end;
 		len = q.len;
+		mas = new T[MaxSize];
 		for (int i = 0; i < MaxSize; i++)
 			mas[i] = q.mas[i];
 	}
@@ -66,11 +67,15 @@ public:
 
 	T Front()  //чтение без удаления
 	{
+		if (!len)
+			throw - 1;
 		return mas[begin];
 	}
 
 	T Back()  //чтение последнего элемента в очереди без удаления
 	{
+		if (!len)
+			throw - 1;
 		return mas[end];
 	}
 
